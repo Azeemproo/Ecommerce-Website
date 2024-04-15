@@ -1,77 +1,92 @@
-*{
-  margin:0;
+* {
+  margin: 0;
 }
 
-.navbar{
+.navbar {
   display: flex;
   justify-content: space-around;
-  align-items: baseline ;
+  align-items: baseline;
   color: white;
   padding-bottom: 10px;
 }
-a{
+
+a {
   text-decoration: none;
-  color:white;
+  color: white;
 }
-.header{
-  margin:0;
+
+.header {
+  margin: 0;
   background-color: black;
 }
-.cards{
-  display:grid;
+
+.cards {
+  display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  grid-gap:10px;
+  grid-gap: 10px;
   align-items: center;
 }
-.container{
+
+.container {
   margin: 5px;
 }
+
 .item {
   background-color: #ffffff;
   border-radius: 5px;
   text-align: center;
-  box-shadow: 0px 25px 40px  #1687d933;
+  box-shadow: 0px 25px 40px #1687d933;
 }
-.item img{
+
+.item img {
   width: 200px;
   height: 200px;
 }
-.AddToCart{
+
+.AddToCart {
   width: 70%;
   height: 85%;
   background-color: #ffffff;
   border-radius: 20px;
   box-shadow: 0px 25px 40px #1687d933;
-  margin-top:100px;
+  margin-top: 100px;
   margin-left: 200px;
   margin-bottom: 200px;
 }
 
-.AddToCart  h1 {
+.AddToCart h1 {
   font-size: 20px;
   font-weight: 500;
   text-align: center;
   font-family: sans-serif;
 }
-.AddToCart img{
+
+.AddToCart img {
   width: 20px;
-  height:20px;
+  height: 20px;
 }
-.AddToCart tr{
-  display:flex;
-  justify-content:space-around;
+
+.AddToCart tr {
+  display: flex;
+  justify-content: space-around;
   text-decoration: none;
 }
+
 .filteration {
-  padding:10px;
-  margin-left:10px;
+  padding: 10px;
+  margin-left: 10px;
   margin-right: 10px;
   margin-bottom: 50px;
   background-color: yellow;
-  border-radius:10px;
+  border-radius: 10px;
   border: 1px;
 }
+
 .inner-filteration {
   display: flex;
   justify-content: space-around;
+}
+
+.By-Price{
+  justify-content: center;
 }
