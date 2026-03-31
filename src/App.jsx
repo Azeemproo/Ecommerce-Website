@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 const Products = [
-  { id: 0, name: "Gildan Adult Heavy Cotton Long Sleeve T-Shirt", category: "shirt", price: 50, image: "/images/71fP0SzFf+L._AC_UL480_QL65_.jpg", quantity: 1 },
-  {id : 1,  name: "Lucky Brand Men's Venice Burnout Notch Neck Pant", category: "Pant", price: 40, image: "/images/71iArzbJesL._AC_UL480_QL65_.jpg", quantity: 1 },
-  {id : 2,  name: "Gildan Adult Heavy Cotton Long Sleeve T-Shirt", category: "Pant", price: 39, image: "/images/71waKwfaLCL._AC_UL480_QL65_.jpg", quantity: 1 },
-  { id: 3, name: "Under Armour Men's New Freedom Flag T-Shirt", category: "shirt", price: 57, image: "/images/81Y-XWbN7PL._AC_UL480_QL65_.jpg", quantity: 1 },
+  { id: 0, name: "Gildan Adult Heavy Cotton Long Sleeve T-Shirt", category: "shirt", price: 50, image: "/images/product1", quantity: 1 },
+  {id : 1,  name: "Lucky Brand Men's Venice Burnout Notch Neck Pant", category: "Pant", price: 40, image: "/images/product2", quantity: 1 },
+  {id : 2,  name: "Gildan Adult Heavy Cotton Long Sleeve T-Shirt", category: "Pant", price: 39, image: "/images/product3", quantity: 1 },
+  { id: 3, name: "Under Armour Men's New Freedom Flag T-Shirt", category: "shirt", price: 57, image: "/images/product4", quantity: 1 },
   { id: 4, name: "Brit mens check placket polo", category: "shirt", price: 60, image: "/images/black shirt.jpg", quantity: 1 },
   { id: 5, name: "Brit mens check placket polo", category: "shirt", price: 70, image: "/images/black shirt.jpg", quantity: 1 }
 ];
