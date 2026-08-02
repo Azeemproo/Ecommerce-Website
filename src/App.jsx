@@ -55,7 +55,7 @@ function App() {
   const cartCount = cartItem.reduce((sum, i) => sum + i.quantity, 0);
 
   return (
-    <Router basename="/Ecommerce-Website">
+    <Router>
       <div className="App">
         <Header cartCount={cartCount} />
         <Routes>
