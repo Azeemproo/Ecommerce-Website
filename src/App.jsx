@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import './App.css';
 
-// Product data and structure as described in the original file
 const Products = [
   { id: 0, name: "Gildan Adult Heavy Cotton Long Sleeve T-Shirt", category: "shirt", price: 50, image: "/images/product1.jpg", quantity: 1 },
   { id: 1, name: "Lucky Brand Men's Venice Burnout Notch Neck Pant", category: "Pant", price: 40, image: "/images/product2.jpg", quantity: 1 },
-  { id: 2, name: "Gildan Adult Heavy Cotton Long Sleeve T-Shirt", category: "Pant", price: 39, image: "/images/product3.jpg", quantity: 1 },
+  { id: 2, name: "Gildan Adult Heavy Cotton Long Sleeve T-Shirt", category: "shirt", price: 39, image: "/images/product3.jpg", quantity: 1 },
   { id: 3, name: "Under Armour Men's New Freedom Flag T-Shirt", category: "shirt", price: 57, image: "/images/product4.jpg", quantity: 1 },
   { id: 4, name: "Brit mens check placket polo", category: "shirt", price: 60, image: "/images/black shirt.jpg", quantity: 1 },
   { id: 5, name: "Brit mens check placket polo", category: "shirt", price: 70, image: "/images/black shirt.jpg", quantity: 1 }
@@ -13,8 +13,8 @@ const Products = [
 
 function App() {
   const [cartItem, setCartItem] = useState([]);
+  const [toast, setToast] = useState("");
 
-  // Load cart from LocalStorage on mount
   useEffect(() => {
     const savedCart = localStorage.getItem("exampleItemData");
     if (savedCart) {
@@ -22,16 +22,20 @@ function App() {
     }
   }, []);
 
-  // Save cart to LocalStorage whenever it changes
   useEffect(() => {
     localStorage.setItem("exampleItemData", JSON.stringify(cartItem));
   }, [cartItem]);
+
+  useEffect(() => {
+    if (!toast) return;
+    const t = setTimeout(() => setToast(""), 2000);
+    return () => clearTimeout(t);
+  }, [toast]);
 
   const removeFromCart = (itemId) => {
     setCartItem(prevCartItems => prevCartItems.filter(item => item.id !== itemId));
   };
 
-  // Adds items to cart, updating quantity if item exists
   const shoppingCart = (item) => {
     setCartItem(prevCartItems => {
       const itemExists = prevCartItems.find(cartItem => cartItem.id === item.id);
@@ -45,8 +49,30 @@ function App() {
       }
       return [...prevCartItems, item];
     });
+    setToast(`Added "${item.name}" to cart`);
   };
 
+  const cartCount = cartItem.reduce((sum, i) => sum + i.quantity, 0);
+
+  return (
+    <Router basename="/Ecommerce-Website">
+      <div className="App">
+        <Header cartCount={cartCount} />
+        <Routes>
+          <Route path="/" element={<ShopPage shoppingCart={shoppingCart} />} />
+          <Route
+            path="/cart"
+            element={<AddToCart cartItem={cartItem} removeFromCart={removeFromCart} />}
+          />
+        </Routes>
+        {toast && <div className="toast">{toast}</div>}
+      </div>
+    </Router>
+  );
+}
+
+function ShopPage({ shoppingCart }) {
+  const [searchTerm, setSearchTerm] = useState("");
   const [filteredItems, setFilteredItems] = useState(Products);
   const ButtonItems = [...new Set(Products.map((item) => item.category))];
 
@@ -55,35 +81,45 @@ function App() {
     setFilteredItems(newItems);
   };
 
+  const visibleItems = filteredItems.filter((item) =>
+    item.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
-    <div className="App">
-      <Header />
+    <>
+      <div className="search-bar-wrap">
+        <input
+          type="text"
+          placeholder="Search product"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
       <Category
         filterItems={filterItems}
         setFilteredItems={setFilteredItems}
         ButtonItems={ButtonItems}
       />
-      <ProductList clothes={filteredItems} shoppingCart={shoppingCart} />
-      <AddToCart cartItem={cartItem} removeFromCart={removeFromCart} />
-    </div>
+      <ProductList clothes={visibleItems} shoppingCart={shoppingCart} />
+    </>
   );
 }
 
-function Header() {
+function Header({ cartCount }) {
   return (
     <div className="header">
       <div className="navbar">
-        <h1>Amazon</h1>
-        <input type="text" placeholder="search product" />
+        <Link to="/" className="brand-link">
+           <h1>Fernwood</h1>
+        </Link>
         <a href="#">Accounts and lists</a>
-        <a href="#">return and orders</a>
-        <a href="#">Cart</a>
+        <a href="#">Returns and orders</a>
+        <Link to="/cart">Cart ({cartCount})</Link>
       </div>
     </div>
   );
 }
 
-// Lists products and manages individual item quantity before adding to cart
 function ProductList({ clothes, shoppingCart }) {
   const [clothesState, setClothesState] = useState(clothes);
 
@@ -107,6 +143,14 @@ function ProductList({ clothes, shoppingCart }) {
     );
   };
 
+  if (clothesState.length === 0) {
+    return (
+      <div className="container">
+        <p className="no-results">No products match your search.</p>
+      </div>
+    );
+  }
+
   return (
     <div className="container">
       <div className="cards">
@@ -122,7 +166,7 @@ function ProductList({ clothes, shoppingCart }) {
                 {cloth.quantity}
                 <button onClick={() => removeItem(cloth.id)}>-</button>
               </p>
-              <button onClick={() => shoppingCart(cloth)}>AddToCart</button>
+              <button onClick={() => shoppingCart(cloth)}>Add to cart</button>
             </div>
           );
         })}
@@ -131,20 +175,21 @@ function ProductList({ clothes, shoppingCart }) {
   );
 }
 
-// Displays cart items in a table with a total price calculation
 const AddToCart = ({ cartItem, removeFromCart }) => {
   const cartTotal = cartItem.reduce((acc, item) => acc + (item.price * item.quantity), 0);
 
   return (
     <div className="AddToCart">
-      <h1>ShoppingCart</h1>
+      <h1>Shopping Cart</h1>
       {cartItem.length === 0 ? (
-        <p>Your cart is empty.</p>
+        <p>
+          Your cart is empty. <Link to="/">Continue shopping →</Link>
+        </p>
       ) : (
         <>
           <table style={{ width: "100%", textAlign: "left", borderCollapse: "collapse" }}>
             <thead>
-              <tr style={{ borderBottom: "2px solid #ccc" }}>
+              <tr>
                 <th>Image</th>
                 <th>Name</th>
                 <th>Price</th>
@@ -154,9 +199,9 @@ const AddToCart = ({ cartItem, removeFromCart }) => {
             </thead>
             <tbody>
               {cartItem.map((item) => (
-                <tr key={item.id} style={{ borderBottom: "1px solid #eee" }}>
+                <tr key={item.id}>
                   <td>
-                    <img src={item.image} alt={item.name} style={{ width: "50px", height: "auto" }} />
+                    <img src={item.image} alt={item.name} style={{ width: "50px", height: "auto", borderRadius: "4px" }} />
                   </td>
                   <td>{item.name}</td>
                   <td>${item.price}</td>
@@ -177,10 +222,9 @@ const AddToCart = ({ cartItem, removeFromCart }) => {
   );
 };
 
-// Handles category and price filtering
 function Category({ filterItems, setFilteredItems, ButtonItems }) {
   const [priceRange, setPriceRange] = useState(1000);
-  
+
   const HandlePrice = (e) => {
     setPriceRange(e.target.value);
   };
@@ -212,4 +256,3 @@ function Category({ filterItems, setFilteredItems, ButtonItems }) {
   );
 }
 export default App;
-

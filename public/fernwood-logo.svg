@@ -1,0 +1,43 @@
+<svg viewBox="0 0 640 240" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="fernGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3E6B3A"/>
+      <stop offset="100%" stop-color="#1F3F22"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Fern mark -->
+  <g transform="translate(60,120)">
+    <!-- main stem -->
+    <path d="M0,80 Q10,20 0,-70" stroke="url(#fernGrad)" stroke-width="5" fill="none" stroke-linecap="round"/>
+
+    <!-- fronds left -->
+    <path d="M0,60 Q-28,50 -42,62" stroke="url(#fernGrad)" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <path d="M0,60 Q-28,50 -42,62 Q-30,52 -18,56" stroke="url(#fernGrad)" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+    <path d="M-2,30 Q-34,20 -50,32" stroke="url(#fernGrad)" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <path d="M-2,0 Q-36,-8 -54,2" stroke="url(#fernGrad)" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <path d="M-1,-30 Q-32,-38 -48,-28" stroke="url(#fernGrad)" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <path d="M0,-55 Q-24,-62 -36,-54" stroke="url(#fernGrad)" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+
+    <!-- fronds right -->
+    <path d="M0,60 Q28,50 42,62" stroke="url(#fernGrad)" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <path d="M-2,30 Q30,22 46,34" stroke="url(#fernGrad)" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <path d="M-2,0 Q32,-6 50,4" stroke="url(#fernGrad)" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <path d="M-1,-30 Q28,-36 44,-26" stroke="url(#fernGrad)" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <path d="M0,-55 Q20,-60 32,-52" stroke="url(#fernGrad)" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+
+    <!-- fiddlehead curl at top -->
+    <path d="M0,-70 Q6,-80 -2,-86 Q-10,-92 -2,-96 Q4,-99 0,-103"
+          stroke="url(#fernGrad)" stroke-width="5" fill="none" stroke-linecap="round"/>
+  </g>
+
+  <!-- Wordmark -->
+  <text x="150" y="112" font-family="Georgia, 'Times New Roman', serif" font-size="52"
+        letter-spacing="2" fill="#1F3F22" font-weight="600">Fernwood</text>
+
+  <!-- Tagline / underline -->
+  <line x1="152" y1="132" x2="470" y2="132" stroke="#87A96B" stroke-width="2"/>
+  <text x="152" y="158" font-family="'Trebuchet MS', Helvetica, sans-serif" font-size="16"
+        letter-spacing="5" fill="#6B8F63">GROW  •  BELONG  •  THRIVE</text>
+</svg>
