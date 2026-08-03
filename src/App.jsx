@@ -110,7 +110,7 @@ function Header({ cartCount }) {
     <div className="header">
       <div className="navbar">
         <Link to="/" className="brand-link">
-           <h1>Fernwood</h1>
+          <h1>Threadloom</h1>
         </Link>
         <a href="#">Accounts and lists</a>
         <a href="#">Returns and orders</a>
@@ -200,13 +200,13 @@ const AddToCart = ({ cartItem, removeFromCart }) => {
             <tbody>
               {cartItem.map((item) => (
                 <tr key={item.id}>
-                  <td>
+                  <td data-label="Image">
                     <img src={item.image} alt={item.name} style={{ width: "50px", height: "auto", borderRadius: "4px" }} />
                   </td>
-                  <td>{item.name}</td>
-                  <td>${item.price}</td>
-                  <td>{item.quantity}</td>
-                  <td>
+                  <td data-label="Name">{item.name}</td>
+                  <td data-label="Price">${item.price}</td>
+                  <td data-label="Quantity">{item.quantity}</td>
+                  <td data-label="Remove">
                     <button onClick={() => removeFromCart(item.id)}>Remove</button>
                   </td>
                 </tr>

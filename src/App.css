@@ -309,3 +309,110 @@ body {
   font-size: 1rem;
   padding: 60px 0;
 }
+ 
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 768px) {
+  .navbar {
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 14px 16px;
+  }
+ 
+  .navbar h1 {
+    margin-right: 0;
+    flex: 1 1 100%;
+    text-align: center;
+  }
+ 
+  .navbar a,
+  .navbar .brand-link {
+    font-size: 0.8rem;
+  }
+ 
+  .search-bar-wrap {
+    padding: 12px 16px;
+  }
+ 
+  .inner-filteration {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 16px;
+  }
+ 
+  .By-Price input[type="range"] {
+    width: 100%;
+  }
+ 
+  .container {
+    padding: 24px 16px;
+  }
+ 
+  .cards {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 16px;
+  }
+ 
+  .item {
+    padding: 14px;
+  }
+ 
+  .item img {
+    height: 160px;
+  }
+ 
+  .item h3 {
+    font-size: 0.85rem;
+    min-height: auto;
+  }
+ 
+  .AddToCart {
+    padding: 20px 16px;
+    margin: 0 12px 40px 12px;
+  }
+ 
+  /* Stack the cart table on very small screens */
+  .AddToCart table,
+  .AddToCart thead,
+  .AddToCart tbody,
+  .AddToCart th,
+  .AddToCart td,
+  .AddToCart tr {
+    display: block;
+  }
+ 
+  .AddToCart thead tr {
+    display: none;
+  }
+ 
+  .AddToCart tr {
+    border-bottom: 1px solid #eee2d2;
+    padding: 12px 0;
+  }
+ 
+  .AddToCart td {
+    padding: 4px 0;
+  }
+ 
+  .AddToCart td:before {
+    content: attr(data-label);
+    font-weight: 600;
+    display: inline-block;
+    width: 90px;
+    color: #6b5f4f;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+  }
+ 
+  .toast {
+    width: 90%;
+    text-align: center;
+    font-size: 0.85rem;
+  }
+}
+ 
+@media (max-width: 420px) {
+  .cards {
+    grid-template-columns: 1fr 1fr;
+  }
+}
