@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import './App.css';
+import Footer from './Footer';
 
 function App() {
   const [cartItem, setCartItem] = useState([]);
@@ -57,6 +58,7 @@ function App() {
           />
         </Routes>
         {toast && <div className="toast">{toast}</div>}
+        <Footer />
       </div>
     </Router>
   );
@@ -69,7 +71,7 @@ function ShopPage({ shoppingCart }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredItems, setFilteredItems] = useState([]);
 
-  // ---- Fetch real product data from the API instead of a hardcoded array ----
+
   useEffect(() => {
     setLoading(true);
     fetch("https://fakestoreapi.com/products")
@@ -78,7 +80,7 @@ function ShopPage({ shoppingCart }) {
         return res.json();
       })
       .then((data) => {
-        // API sends "title", our app expects "name" — reshape it here
+       
         const formatted = data.map((item) => ({
           id: item.id,
           name: item.title,
@@ -95,7 +97,7 @@ function ShopPage({ shoppingCart }) {
         setError(err.message);
         setLoading(false);
       });
-  }, []); // runs once on mount
+  }, []); 
 
   const ButtonItems = [...new Set(products.map((item) => item.category))];
 
