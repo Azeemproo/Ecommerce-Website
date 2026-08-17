@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import './App.css';
-import Footer from './Footer';
+import Footer from './footer';
 
 function App() {
   const [cartItem, setCartItem] = useState([]);
