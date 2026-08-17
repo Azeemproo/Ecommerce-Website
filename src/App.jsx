@@ -2,15 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import './App.css';
 
-const Products = [
-  { id: 0, name: "Gildan Adult Heavy Cotton Long Sleeve T-Shirt", category: "shirt", price: 50, image: "/images/product1.jpg", quantity: 1 },
-  { id: 1, name: "Lucky Brand Men's Venice Burnout Notch Neck Pant", category: "Pant", price: 40, image: "/images/product2.jpg", quantity: 1 },
-  { id: 2, name: "Gildan Adult Heavy Cotton Long Sleeve T-Shirt", category: "shirt", price: 39, image: "/images/product3.jpg", quantity: 1 },
-  { id: 3, name: "Under Armour Men's New Freedom Flag T-Shirt", category: "shirt", price: 57, image: "/images/product4.jpg", quantity: 1 },
-  { id: 4, name: "Brit mens check placket polo", category: "shirt", price: 60, image: "/images/black shirt.jpg", quantity: 1 },
-  { id: 5, name: "Brit mens check placket polo", category: "shirt", price: 70, image: "/images/black shirt.jpg", quantity: 1 }
-];
-
 function App() {
   const [cartItem, setCartItem] = useState([]);
   const [toast, setToast] = useState("");
@@ -72,18 +63,62 @@ function App() {
 }
 
 function ShopPage({ shoppingCart }) {
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
-  const [filteredItems, setFilteredItems] = useState(Products);
-  const ButtonItems = [...new Set(Products.map((item) => item.category))];
+  const [filteredItems, setFilteredItems] = useState([]);
+
+  // ---- Fetch real product data from the API instead of a hardcoded array ----
+  useEffect(() => {
+    setLoading(true);
+    fetch("https://fakestoreapi.com/products")
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to fetch products");
+        return res.json();
+      })
+      .then((data) => {
+        // API sends "title", our app expects "name" — reshape it here
+        const formatted = data.map((item) => ({
+          id: item.id,
+          name: item.title,
+          category: item.category,
+          price: item.price,
+          image: item.image,
+          quantity: 1,
+        }));
+        setProducts(formatted);
+        setFilteredItems(formatted);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setLoading(false);
+      });
+  }, []); // runs once on mount
+
+  const ButtonItems = [...new Set(products.map((item) => item.category))];
 
   const filterItems = (cat) => {
-    const newItems = Products.filter((newVal) => newVal.category === cat);
+    const newItems = products.filter((newVal) => newVal.category === cat);
     setFilteredItems(newItems);
   };
 
   const visibleItems = filteredItems.filter((item) =>
     item.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  if (loading) {
+    return <p className="no-results">Loading products…</p>;
+  }
+
+  if (error) {
+    return (
+      <div className="container">
+        <p className="no-results">Couldn't load products: {error}</p>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -99,6 +134,7 @@ function ShopPage({ shoppingCart }) {
         filterItems={filterItems}
         setFilteredItems={setFilteredItems}
         ButtonItems={ButtonItems}
+        allProducts={products}
       />
       <ProductList clothes={visibleItems} shoppingCart={shoppingCart} />
     </>
@@ -110,7 +146,7 @@ function Header({ cartCount }) {
     <div className="header">
       <div className="navbar">
         <Link to="/" className="brand-link">
-          <h1>Threadloom</h1>
+          <h1>Fernwood</h1>
         </Link>
         <a href="#">Accounts and lists</a>
         <a href="#">Returns and orders</a>
@@ -222,7 +258,7 @@ const AddToCart = ({ cartItem, removeFromCart }) => {
   );
 };
 
-function Category({ filterItems, setFilteredItems, ButtonItems }) {
+function Category({ filterItems, setFilteredItems, ButtonItems, allProducts }) {
   const [priceRange, setPriceRange] = useState(1000);
 
   const HandlePrice = (e) => {
@@ -234,7 +270,7 @@ function Category({ filterItems, setFilteredItems, ButtonItems }) {
       <div className="inner-filteration">
         <div className="By-Category">
           <h2>By Category</h2>
-          <button onClick={() => setFilteredItems(Products)}>All</button>
+          <button onClick={() => setFilteredItems(allProducts)}>All</button>
           {ButtonItems.map((item) => (
             <button key={item} onClick={() => filterItems(item)}>
               {item}
