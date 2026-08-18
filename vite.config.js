@@ -3,6 +3,5 @@ import react from '@vitejs/plugin-react-swc'
 
 export default defineConfig({
   base: '/Ecommerce-Website/',  
-  // ya
   base: '/',                     
 })

@@ -230,6 +230,12 @@ body {
 .item > button:hover {
   background: #a3492b;
 }
+.item a {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
  
 /* ---------- CART ---------- */
 .AddToCart {

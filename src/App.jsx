@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import './App.css';
 import Footer from './footer';
+import ProductDetail from './ProductDetail';
 
 function App() {
   const [cartItem, setCartItem] = useState([]);
@@ -56,9 +57,10 @@ function App() {
             path="/cart"
             element={<AddToCart cartItem={cartItem} removeFromCart={removeFromCart} />}
           />
+          <Route  path='/product/:id' element={<ProductDetail shoppingCart ={shoppingCart}/>}/>
         </Routes>
         {toast && <div className="toast">{toast}</div>}
-        <Footer />
+        <Footer/>
       </div>
     </Router>
   );
@@ -195,9 +197,11 @@ function ProductList({ clothes, shoppingCart }) {
         {clothesState.map(function (cloth) {
           return (
             <div key={cloth.id} className="item">
+              <Link to = {`/product/${cloth.id}`}>
               <img src={cloth.image} alt={cloth.name} />
               <h3>{cloth.name}</h3>
               <h2>${cloth.price}</h2>
+              </Link>
               <p>
                 Quantity of Item:{" "}
                 <button onClick={() => AddItem(cloth.id)}>+</button>
