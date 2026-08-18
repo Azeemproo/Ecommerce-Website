@@ -13,7 +13,7 @@ function App() {
     if (savedCart) {
       setCartItem(JSON.parse(savedCart));
     }
-  }, []);
+  }, [])
 
   useEffect(() => {
     localStorage.setItem("exampleItemData", JSON.stringify(cartItem));
